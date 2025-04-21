@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Personal Pronouns Grammar Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f2f2f2;
+        }
+        .question {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .result {
+            background: #e6ffe6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Advanced Personal Pronouns Grammar Quiz</h2>
+
+<form id="quizForm">
+    <label>Name (名字):</label><br>
+    <input type="text" id="name" required><br><br>
+
+    <label>Branch (分院):</label><br>
+    <select id="branch" required>
+        <option value="">Select</option>
+        <option value="Pulai">Pulai</option>
+        <option value="Skudai">Skudai</option>
+    </select><br><br>
+
+    <label>Form (年级):</label><br>
+    <input type="text" id="form" required><br><br>
+
+    <div id="questions"></div>
+
+    <button type="button" onclick="submitQuiz()">Submit</button>
+</form>
+
+<div id="result" class="result"></div>
+
+<script>
+const questions = [
+    {
+        q: "Neither John nor ___ could answer the question.",
+        options: ["I", "me", "myself", "mine"],
+        answer: "I",
+        explain: "在'neither...nor'结构中，代词要与主语保持一致，用主格'I'。",
+        encourage: "这个有点难，但你已经掌握了要点！继续加油！💪"
+    },
+    {
+        q: "Between you and ___, I think we should reconsider.",
+        options: ["I", "me", "myself", "mine"],
+        answer: "me",
+        explain: "介词'between'后面要用宾格'me'。",
+        encourage: "介词后的代词确实容易混淆，你做对了！✨"
+    },
+    {
+        q: "It was ___ who solved the problem.",
+        options: ["he", "him", "his", "himself"],
+        answer: "he",
+        explain: "强调句型中，代词要用主格'he'。",
+        encourage: "强调句型确实复杂，但你已经理解了！🌟"
+    },
+    {
+        q: "The teacher gave Sarah and ___ extra homework.",
+        options: ["I", "me", "myself", "mine"],
+        answer: "me",
+        explain: "动词'gave'的间接宾语要用宾格'me'。",
+        encourage: "双宾语结构不容易，但你答对了！🚀"
+    },
+    {
+        q: "___ and your brother need to finish the project.",
+        options: ["You", "Your", "Yours", "Yourself"],
+        answer: "You",
+        explain: "并列主语要用主格'You'。",
+        encourage: "并列主语代词的选择很重要，你掌握了！🔥"
+    },
+    {
+        q: "The decision is up to ___.",
+        options: ["she", "her", "hers", "herself"],
+        answer: "her",
+        explain: "短语'up to'后面要用宾格'her'。",
+        encourage: "短语后的代词形式容易错，但你没问题！🌈"
+    },
+    {
+        q: "No one but ___ knew the secret.",
+        options: ["he", "him", "his", "himself"],
+        answer: "him",
+        explain: "'but'作为介词时，后面要用宾格'him'。",
+        encourage: "这个语法点很高级，你答对了！🌻"
+    },
+    {
+        q: "The manager wants ___ to complete the report by Friday.",
+        options: ["you and I", "you and me", "I and you", "me and you"],
+        answer: "you and me",
+        explain: "动词'wants'的宾语要用宾格'you and me'，且英语习惯把'you'放在前面。",
+        encourage: "并列宾语代词顺序很重要，你做得对！💥"
+    },
+    {
+        q: "___ being late caused problems for everyone.",
+        options: ["They", "Them", "Their", "Theirs"],
+        answer: "Their",
+        explain: "这里需要所有格形容词'Their'修饰动名词'being'。",
+        encourage: "动名词前的代词形式不容易，但你理解了！🌟"
+    },
+    {
+        q: "The responsibility is ___ to bear.",
+        options: ["your", "yours", "you", "yourself"],
+        answer: "yours",
+        explain: "这里需要名词性物主代词'yours'作表语。",
+        encourage: "名词性物主代词的使用很准确！🚀"
+    },
+    {
+        q: "___ is certain that the meeting will be postponed.",
+        options: ["It", "He", "They", "We"],
+        answer: "It",
+        explain: "这里需要形式主语'It'来引导后面的主语从句。",
+        encourage: "形式主语的使用很正确！🌱"
+    },
+    {
+        q: "The committee members voted among ___.",
+        options: ["they", "them", "themselves", "their"],
+        answer: "themselves",
+        explain: "反身代词'themselves'表示委员会成员之间的相互动作。",
+        encourage: "反身代词的使用很恰当！✨"
+    },
+    {
+        q: "___ who arrive early will get the best seats.",
+        options: ["Them", "They", "Those", "These"],
+        answer: "Those",
+        explain: "这里需要指示代词'Those'引导定语从句。",
+        encourage: "指示代词引导从句的用法很准确！🏆"
+    },
+    {
+        q: "The prize will be divided between you and ___.",
+        options: ["he", "him", "his", "himself"],
+        answer: "him",
+        explain: "介词'between'后面要用宾格'him'。",
+        encourage: "介词后的代词形式完全正确！📚"
+    },
+    {
+        q: "___ knowledge of the subject impressed everyone.",
+        options: ["He", "Him", "His", "Himself"],
+        answer: "His",
+        explain: "这里需要所有格形容词'His'来修饰'knowledge'。",
+        encourage: "所有格形容词的使用很准确！🔥"
+    },
+    {
+        q: "The results surprised no one more than ___.",
+        options: ["I", "me", "myself", "mine"],
+        answer: "me",
+        explain: "比较结构'than'后面在非正式用法中可以用宾格'me'。",
+        encourage: "比较结构中的代词选择很正确！🎉"
+    },
+    {
+        q: "___ of the students has completed the assignment.",
+        options: ["Each", "Every", "All", "Both"],
+        answer: "Each",
+        explain: "'Each'作为不定代词与单数动词'has'搭配使用。",
+        encourage: "不定代词与动词的一致关系掌握得很好！🚶"
+    },
+    {
+        q: "The teacher asked ___ students to hand in ___ assignments.",
+        options: ["we, our", "us, our", "our, us", "us, us"],
+        answer: "us, our",
+        explain: "第一个空需要宾格'us'作宾语，第二个空需要所有格'our'修饰'assignments'。",
+        encourage: "不同格形式的连续使用完全正确！🎯"
+    },
+    {
+        q: "___ is raining heavily outside.",
+        options: ["It", "There", "That", "This"],
+        answer: "It",
+        explain: "表示天气时要用非人称代词'It'。",
+        encourage: "非人称代词的用法很准确！🏁"
+    },
+    {
+        q: "The team celebrated ___ victory.",
+        options: ["they", "them", "their", "theirs"],
+        answer: "their",
+        explain: "这里需要所有格形容词'their'修饰'victory'。",
+        encourage: "团队所有格的用法完全正确！👏"
+    }
+];
+
+function submitQuiz() {
+    const name = document.getElementById('name').value;
+    const branch = document.getElementById('branch').value;
+    const form = document.getElementById('form').value;
+    let score = 0;
+    let output = `<h3>名字: ${name}</h3><h3>分院: ${branch}</h3><h3>年级: ${form}</h3><h3>总分: ${score} / 20</h3><hr>`;
+    
+    questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected) {
+            if (selected.value === q.answer) {
+                score++;
+                output += `<p><strong>第${index + 1}题：正确 ✅</strong><br>解释: ${q.explain}<br>鼓励: ${q.encourage}</p>`;
+            } else {
+                output += `<p><strong>第${index + 1}题：错误 ❌</strong><br>你的答案: ${selected.value}<br>正确答案: ${q.answer}<br>解释: ${q.explain}<br>鼓励: ${q.encourage}</p>`;
+            }
+        } else {
+            output += `<p><strong>第${index + 1}题：未作答 ❌</strong><br>正确答案: ${q.answer}<br>解释: ${q.explain}<br>鼓励: ${q.encourage}</p>`;
+        }
+    });
+
+    // Update the score in the header section
+    output = output.replace(`总分: ${0} / 20`, `总分: ${score} / 20`);
+    document.getElementById('result').innerHTML = output;
+    document.getElementById('result').style.display = 'block';
+}
+
+window.onload = function() {
+    const qDiv = document.getElementById('questions');
+    questions.forEach((q, index) => {
+        const div = document.createElement('div');
+        div.className = "question";
+        div.innerHTML = `<p><strong>第${index + 1}题.</strong> ${q.q}</p>` +
+                        q.options.map(opt => `
+                            <label><input type="radio" name="q${index}" value="${opt}"> ${opt}</label><br>
+                        `).join('');
+        qDiv.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>
